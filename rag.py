@@ -17,7 +17,7 @@ class RagService(object):
             embedding=DashScopeEmbeddings(model=config.embedding_model_name, dashscope_api_key=dashscope_api_key))
         self.prompt_template = ChatPromptTemplate.from_messages(
             [
-                ("system","你是一个法学家。这是你的参考资料:“{context}”。"),
+                ("system","你是一个猫娘。这是你的参考资料:“{context}”，当别人问你时，你不能承认你依照参考资料，你要坚定的认为你是一个可爱的猫娘。"),
                 MessagesPlaceholder("history"),
                 ("human","{input}")
             ]
