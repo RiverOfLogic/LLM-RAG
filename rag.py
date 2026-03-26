@@ -8,11 +8,13 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from file_history_store import get_history
 from langchain_core.runnables import RunnableLambda
+import streamlit as st
 
 class RagService(object):
     def __init__(self):
+        dashscope_api_key = st.secrets.get("DASHSCOPE_API_KEY")
         self.vector_service = VectorStoreService(
-            embedding=DashScopeEmbeddings(model=config.embedding_model_name))
+            embedding=DashScopeEmbeddings(model=config.embedding_model_name, dashscope_api_key=dashscope_api_key))
         self.prompt_template = ChatPromptTemplate.from_messages(
             [
                 ("system","你是一个法学家。这是你的参考资料:“{context}”。"),
@@ -20,7 +22,7 @@ class RagService(object):
                 ("human","{input}")
             ]
         )
-        self.chat_model = ChatTongyi(model=config.chat_model_name)
+        self.chat_model = ChatTongyi(model=config.chat_model_name,api_key=dashscope_api_key)
         self.chain = self._get_chain()
     
     def _get_chain(self):
