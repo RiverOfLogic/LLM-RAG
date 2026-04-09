@@ -4,13 +4,13 @@ import config_data as config
 
 
 st.set_page_config(
-    page_title="猫娘",
+    page_title="小猫",
     page_icon="😽",
     layout="centered",
     initial_sidebar_state="expanded"
 )
 #标题
-st.title("😽猫娘🐱")
+st.title("😽小猫🐱")
 st.divider() #分隔符
 
 if "message" not in st.session_state:
@@ -30,7 +30,7 @@ if prompt:
     st.chat_message("user").write(prompt)
     st.session_state["message"].append({"role":"user","content":prompt})
 
-    with st.spinner("猫娘思考中🐱🐈🐈‍⬛"):
+    with st.spinner("小猫思考中🐱🐈🐈‍⬛"):
         res_stream = st.session_state["rag"].chain.stream({"input":prompt},config.session_config)
         res = st.chat_message("assistant").write_stream(res_stream)
         st.session_state["message"].append({"role":"assistant","content":res})
